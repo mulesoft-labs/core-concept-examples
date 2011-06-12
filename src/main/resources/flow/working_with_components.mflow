@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="Working with Components">
+    <flow name="Flow1" entity-id="db07a14a-96d6-4b82-97cb-90b05f0350d5">
+        <lane entity-id="f4531380-4f98-494e-8efa-a081749d91e2">
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="org.mule.tooling.ui.modules.core.endpoint.httpEndpoint" name="HTTP" entity-id="2d7a52db-9dee-4fd9-8cf2-8195ca7f5ade">
+                <properties>
+                    <property value="${http.port}" name="port"/>
+                    <property value="" name="endpoint.address"/>
+                    <property value="localhost" name="host"/>
+                    <property value="" name="content.type"/>
+                    <property value="" name="endpoint.exchange.pattern"/>
+                    <property value="" name="path"/>
+                    <property value="" name="endpoint.connector.ref"/>
+                    <property value="" name="method"/>
+                    <property value="" name="password"/>
+                    <property value="" name="user"/>
+                    <property value="false" name="keep.alive"/>
+                </properties>
+                <description></description>
+            </endpoint>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.component" name="Hello" entity-id="285af152-2c55-4d63-aa33-04280b4e54a6">
+                <properties>
+                    <property value="org.mule.examples.hello.HelloComponent" name="class.name"/>
+                    <property value="false" name="component.singleton"/>
+                </properties>
+                <description>A simple Hello Component
+</description>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
