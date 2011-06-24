@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.1/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/3.1/mule-file.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd ">
+    <flow name="addingOutboundEndpoints">
+        <http:inbound-endpoint host="localhost" port="8081" method="GET" contentType="" exchange-pattern="request-response" doc:name="HTTP" doc:description="The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol."/>
+        <logger level="INFO" doc:name="Logger" doc:description="Performs logging using an expression that determines what should be logged."/>
+        <custom-transformer class="com.mytransformers.MyTransformer" doc:name="Custom Transformer" doc:description="Transformer that delegates to a Java class."/>
+        <echo-component doc:name="Echo" doc:description="Echoes message payload."/>
+        <file:outbound-endpoint name="outboundExample" path="/Users/sweta" outputPattern="myfile#[function:datestamp]" doc:name="File" doc:description="Read/write a file from the filesystem"/>
+    </flow>
+</mule>

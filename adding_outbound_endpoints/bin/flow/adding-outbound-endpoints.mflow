@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="adding-outbound-endpoints">
+    <flow name="addingOutboundEndpoints">
+        <lane entity-id="dbfdc67e-7316-48c9-9f9b-4747c7ce36ce">
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="3382c693-8f03-4306-bc4b-071da6bf62e3">
+                <properties>
+                    <property value="8081" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property value="false" name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="false" name="keep-alive"/>
+                    <property value="" name="contentType"/>
+                    <property value="false" name="disableTransportTransformer"/>
+                    <property value="" name="password"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="" name="transformer-refs"/>
+                    <property value="" name="address"/>
+                    <property value="" name="name"/>
+                    <property value="" name="path"/>
+                    <property value="" name="encoding"/>
+                    <property value="" name="responseTransformer-refs"/>
+                    <property value="GET" name="method"/>
+                    <property value="" name="user"/>
+                    <property value="" name="mimeType"/>
+                    <property value="10000" name="responseTimeout"/>
+                    <property value="" name="connector-ref"/>
+                </properties>
+                <description>The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol.</description>
+            </endpoint>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.logger" name="Logger" entity-id="a6f1f452-ded1-4e1b-9c47-6bf6fae88510">
+                <properties>
+                    <property value="INFO" name="logger.level"/>
+                </properties>
+                <description>Performs logging using an expression that determines what should be logged.</description>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.customTransformer" name="Custom Transformer" entity-id="e4057a75-dc8b-41b3-9345-20f68c44eeb1">
+                <properties>
+                    <property value="com.mytransformers.MyTransformer" name="custom.transformer.classname"/>
+                </properties>
+                <description>Transformer that delegates to a Java class.</description>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.echo" name="Echo" entity-id="b0dcc21c-47fc-40eb-8f00-b3a0f6f885dc">
+                <description>Echoes message payload.</description>
+            </pattern>
+            <endpoint message-exchange-pattern="OneWay" direction="Outbound" type="http://www.mulesoft.org/schema/mule/file/endpoint" name="File" entity-id="8a6563c5-a885-4cdd-913b-689bb2929808">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="outboundExample" name="name"/>
+                    <property value="/Users/sweta" name="path"/>
+                    <property value="myfile#[function:datestamp]" name="outputPattern"/>
+                    <property name="moveToPattern"/>
+                    <property name="moveToDirectory"/>
+                    <property name="pollingFrequency"/>
+                    <property name="fileAge"/>
+                    <property name="comparator"/>
+                    <property name="reverseOrder"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="connector-ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                </properties>
+                <description>Read/write a file from the filesystem</description>
+            </endpoint>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
