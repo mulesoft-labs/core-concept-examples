@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="working-with-transformers">
+    <flow>
+        <lane entity-id="2020246e-d276-4c12-98ee-2bc96dcf0883">
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="org.mule.tooling.ui.modules.core.endpoint.httpEndpoint" name="HTTP" entity-id="e740b203-a7d0-448a-b2cb-322d9462c892">
+                <properties>
+                    <property value="8082" name="port"/>
+                    <property value="" name="endpoint.address"/>
+                    <property value="localhost" name="host"/>
+                    <property value="" name="content.type"/>
+                    <property value="" name="endpoint.exchange.pattern"/>
+                    <property value="" name="path"/>
+                    <property value="" name="endpoint.connector.ref"/>
+                    <property value="" name="method"/>
+                    <property value="" name="password"/>
+                    <property value="" name="user"/>
+                    <property value="false" name="keep.alive"/>
+                </properties>
+                <description>Process HTTP reqests or responses.</description>
+            </endpoint>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.customTransformer" name="Name Transformer" entity-id="909f1b2a-63c3-49f6-86eb-7e03782a1e22">
+                <properties>
+                    <property value="org.mule.examples.hello.NameTransformer" name="custom.transformer.classname"/>
+                </properties>
+                <description>This will remove the initial unwanted slash, if possible.</description>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.component" name="Hello" entity-id="d78a6eee-61e6-4bcf-ad1d-58d236e76675">
+                <properties>
+                    <property value="org.mule.examples.hello.HelloComponent" name="class.name"/>
+                    <property value="false" name="component.singleton"/>
+                </properties>
+                <description>Component that says Hello.</description>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
