@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="fllow">
+    <flow name="flow">
+        <lane entity-id="e3a66204-fb0a-4083-ab5b-2986e4924f1c">
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="ab1cb903-faa0-41ee-bf19-b95d920dcdef">
+                <properties>
+                    <property name="name"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="localhost" name="host"/>
+                    <property value="8082" name="port"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="path"/>
+                    <property value="GET" name="method"/>
+                    <property value="" name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="followRedirects"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="connector-ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                </properties>
+                <description>The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol.</description>
+            </endpoint>
+            <pattern type="org.mule.tooling.ui.modules.core.filter.RegExFilter" name="RegEx Filter" entity-id="ab8f4aff-3e08-490a-a3b7-d953274f2f8f">
+                <properties>
+                    <property value="^((?!/favicon.ico).)*$" name="filter.regex.pattern"/>
+                </properties>
+                <description>Applies a regular expression pattern to the message payload.</description>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.component" name="Component" entity-id="432b3b08-6424-459f-a9e1-f77fc3e6957f">
+                <properties>
+                    <property value="org.mule.examples.hello.HelloComponent" name="class.name"/>
+                    <property value="false" name="component.singleton"/>
+                </properties>
+                <description>Invoke a Java component</description>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
