@@ -27,18 +27,19 @@
                 </properties>
                 <description>The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol.</description>
             </endpoint>
-            <pattern type="org.mule.tooling.ui.modules.core.filter.RegExFilter" name="RegEx Filter" entity-id="ab8f4aff-3e08-490a-a3b7-d953274f2f8f">
+            <pattern type="org.mule.tooling.ui.modules.core.filter.WildcardFilter" name="Mule-* Filter" entity-id="f14e3086-4d07-4071-b149-919d9a7ec411">
                 <properties>
-                    <property value="^((?!/favicon.ico).)*$" name="filter.regex.pattern"/>
+                    <property value="true" name="filter.wildcard.casesensitive"/>
+                    <property value="/Mule-*" name="filter.wildcard.pattern"/>
                 </properties>
-                <description>Applies a regular expression pattern to the message payload.</description>
+                <description>A filter that matches any string starting with Mule-</description>
             </pattern>
-            <pattern type="org.mule.tooling.ui.modules.core.pattern.component" name="Component" entity-id="432b3b08-6424-459f-a9e1-f77fc3e6957f">
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.component" name="Hello" entity-id="432b3b08-6424-459f-a9e1-f77fc3e6957f">
                 <properties>
                     <property value="org.mule.examples.hello.HelloComponent" name="class.name"/>
                     <property value="false" name="component.singleton"/>
                 </properties>
-                <description>Invoke a Java component</description>
+                <description></description>
             </pattern>
         </lane>
     </flow>

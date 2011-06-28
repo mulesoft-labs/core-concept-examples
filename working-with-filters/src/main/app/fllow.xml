@@ -6,7 +6,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd ">
     <flow name="flow">
         <http:inbound-endpoint host="localhost" port="8082" method="GET" contentType="" exchange-pattern="request-response"/>
-        <regex-filter pattern="^((?!/favicon.ico).)*$"/>
+        <wildcard-filter pattern="/Mule-*" caseSensitive="true"/>
         <component class="org.mule.examples.hello.HelloComponent"/>
     </flow>
 </mule>
