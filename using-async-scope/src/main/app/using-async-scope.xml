@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:script="http://www.mulesoft.org/schema/mule/scripting" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.1/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/3.1/mule-file.xsd 
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/3.1/mule-scripting.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd ">
+    <flow name="addingOutboundEndpoints">
+        <http:inbound-endpoint host="localhost" port="8081" method="GET" contentType="" exchange-pattern="request-response" doc:name="HTTP" doc:description="The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol."/>
+        <logger message="#[groovy:return message.toString()]" level="INFO" doc:name="Log Request" doc:description="Performs logging using an expression that determines what should be logged."/>
+        <regex-filter name="Filter-favicon" pattern="[^/favicon.ico]" doc:name="Filter favicon" doc:description="Applies a regular expression pattern to the message payload."/>
+        <response>
+            <script:transformer name="Create-Response" doc:name="Create Response" doc:description="Uses a script to transform the payload.">
+                <script:script engine="groovy">
+                    <script:text><![CDATA[return "created file on server containing: " + payload;]]></script:text>
+                </script:script>
+            </script:transformer>
+        </response>
+        <custom-transformer class="org.mule.examples.hello.StripPathTransformer" doc:name="Strip the path" doc:description="Transformer that delegates to a Java class."/>
+        <component class="org.mule.examples.hello.HelloComponent" doc:name="Hello" doc:description="Invoke a Java component"/>
+        <async doc:name="Async" doc:description="Asynchronous block of execution">
+            <file:outbound-endpoint path="/Users/ross/temp" outputPattern="#[payload]-#[function:datestamp].txt" doc:name="File" doc:description="Read/write a file from the filesystem"/>
+        </async>
+        <default-exception-strategy>  
+            <script:transformer name="Error-Response" doc:name="Error Response" doc:description="Uses a script to transform the payload of the respnse error.">  
+                <script:script engine="groovy"> 
+                    <script:text><![CDATA[message.setOutboundProperty("http.status", 400); return "You gave me a bad request: " + payload.getExceptionPayload();]]></script:text> 
+                </script:script> 
+            </script:transformer> 
+        </default-exception-strategy>
+    </flow>
+</mule>

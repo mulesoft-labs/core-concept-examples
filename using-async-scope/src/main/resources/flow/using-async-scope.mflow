@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="using-async-scope">
+    <flow name="addingOutboundEndpoints">
+        <lane entity-id="11a690a8-46d7-42cb-9fa2-aaa29d103ed3">
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="291532b5-244d-4372-a72b-6bba4dc94a2f">
+                <properties>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="localhost" name="host"/>
+                    <property value="8081" name="port"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="path"/>
+                    <property value="GET" name="method"/>
+                    <property value="" name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="followRedirects"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="connector-ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                </properties>
+                <description>The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol.</description>
+            </endpoint>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.logger" name="Log Request" entity-id="9c10e13a-b0dd-46e7-828e-318fe284abe6">
+                <properties>
+                    <property value="#[groovy:return message.toString()]" name="logger.message"/>
+                    <property value="INFO" name="logger.level"/>
+                </properties>
+                <description>Performs logging using an expression that determines what should be logged.</description>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.filter.RegExFilter" name="Filter favicon" entity-id="282d7b4b-89d8-4d85-ac8b-b2c9b6ce5afa">
+                <properties>
+                    <property value="Filter-favicon" name="filter.name"/>
+                    <property value="[^/favicon.ico]" name="filter.regex.pattern"/>
+                </properties>
+                <description>Applies a regular expression pattern to the message payload.</description>
+            </pattern>
+            <response entity-id="28af2dc7-acd8-47c6-985c-dfd4fab33a1f">
+                <compartment entity-id="1b90740d-afab-4792-818d-65158e00545f">
+                    <lane entity-id="f2d47898-c8e2-48fc-bb3d-0e70b7b6b681">
+                        <pattern type="org.mule.tooling.ui.modules.core.pattern.scriptTransformer" name="Create Response" entity-id="6fa4b80e-d290-489d-8df7-2974773d8a53">
+                            <properties>
+<property value="groovy" name="script.engine"/>
+<property value="return &quot;created file on server containing: &quot; + payload;" name="script.text"/>
+<property value="Create-Response" name="transformer.name"/>
+                            </properties>
+                            <description>Uses a script to transform the payload.</description>
+                        </pattern>
+                    </lane>
+                </compartment>
+            </response>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.customTransformer" name="Strip the path" entity-id="55cfaa1c-be08-4011-9dad-2819edd4d622">
+                <properties>
+                    <property value="org.mule.examples.hello.StripPathTransformer" name="custom.transformer.classname"/>
+                </properties>
+                <description>Transformer that delegates to a Java class.</description>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.component" name="Hello" entity-id="ad0f3ceb-b9fc-4c1f-a197-dd92216a6139">
+                <properties>
+                    <property value="org.mule.examples.hello.HelloComponent" name="class.name"/>
+                    <property value="false" name="component.singleton"/>
+                </properties>
+                <description>Invoke a Java component</description>
+            </pattern>
+            <scope type="org.mule.tooling.ui.modules.core.scope.async" name="Async" entity-id="ccedc506-2200-490d-adcb-fd84518ffa21">
+                <description>Asynchronous block of execution</description>
+                <compartment entity-id="872eb8e4-91a5-4ba3-9372-85a316d43b93">
+                    <lane entity-id="7b0e41d4-febb-43eb-9c40-ec472813c490">
+                        <endpoint message-exchange-pattern="OneWay" direction="Outbound" type="http://www.mulesoft.org/schema/mule/file/endpoint" name="File" entity-id="d83584f1-b400-4e3b-b765-027422110a22">
+                            <properties>
+<property value="one-way" name="exchange-pattern"/>
+<property value="/Users/ross/temp" name="path"/>
+<property value="#[payload]-#[function:datestamp].txt" name="outputPattern"/>
+<property name="moveToPattern"/>
+<property name="moveToDirectory"/>
+<property name="pollingFrequency"/>
+<property name="fileAge"/>
+<property name="comparator"/>
+<property name="reverseOrder"/>
+<property name="address"/>
+<property name="responseTimeout"/>
+<property name="encoding"/>
+<property name="disableTransportTransformer"/>
+<property name="mimeType"/>
+<property name="connector-ref"/>
+<property name="transformer-refs"/>
+<property name="responseTransformer-refs"/>
+                            </properties>
+                            <description>Read/write a file from the filesystem</description>
+                        </endpoint>
+                    </lane>
+                </compartment>
+            </scope>
+            <unknown entity-id="1d6516c0-ff86-4690-b46e-100e0e02dc74">
+                <content>&lt;default-exception-strategy xmlns=&quot;http://www.mulesoft.org/schema/mule/core&quot;&gt;  
+            &lt;script:transformer xmlns:script=&quot;http://www.mulesoft.org/schema/mule/scripting&quot; name=&quot;Error-Response&quot; xmlns:doc=&quot;http://www.mulesoft.org/schema/mule/documentation&quot; doc:name=&quot;Error Response&quot; doc:description=&quot;Uses a script to transform the payload of the respnse error.&quot;&gt;  
+                &lt;script:script engine=&quot;groovy&quot;&gt; 
+                    &lt;script:text&gt;&lt;![CDATA[message.setOutboundProperty(&quot;http.status&quot;, 400); return &quot;You gave me a bad request: &quot; + payload.getExceptionPayload();]]&gt;&lt;/script:text&gt; 
+                &lt;/script:script&gt; 
+            &lt;/script:transformer&gt; 
+        &lt;/default-exception-strategy&gt;</content>
+            </unknown>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
