@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/3.1/mule-http.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd ">
+    <flow name="flow">
+        <http:inbound-endpoint host="localhost" port="8082" method="GET" contentType="text/plain" encoding="UTF-8" mimeType="text/plain" exchange-pattern="request-response" doc:name="HTTP" doc:description="The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol."/>
+        <logger message="Hello #[header:INBOUND:name]!" level="INFO" doc:name="ExtractNameProperty" doc:description="Uses logging to show how inbound properties can be accessed from Mule message properties"/>
+        <component class="org.mule.examples.hello.HelloComponent" doc:name="Hello" doc:description="Invoke a Java component"/>
+    </flow>
+</mule>

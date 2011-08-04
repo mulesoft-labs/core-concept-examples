@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="flow">
+    <flow name="flow">
+        <lane entity-id="3bc0276e-370e-4005-8c6d-d6236592801c">
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="ad976119-7783-49e6-9f5a-23518bee0058">
+                <properties>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="localhost" name="host"/>
+                    <property value="8082" name="port"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="path"/>
+                    <property value="GET" name="method"/>
+                    <property value="text/plain" name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property value="UTF-8" name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property value="text/plain" name="mimeType"/>
+                    <property name="followRedirects"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="connector-ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="localhost" name="host"/>
+                    <property value="8082" name="port"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="path"/>
+                    <property value="GET" name="method"/>
+                    <property value="text/plain" name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property value="UTF-8" name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property value="text/plain" name="mimeType"/>
+                    <property name="followRedirects"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="connector-ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                </properties>
+                <description>The HTTPS endpoint allows Mule to send and recieve requests securely using HTTP over SSL protocol.</description>
+            </endpoint>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.logger" name="ExtractNameProperty" entity-id="e05e6afe-5ad3-4813-9058-c00ffb14a7b9">
+                <properties>
+                    <property value="Hello #[header:INBOUND:name]!" name="logger.message"/>
+                    <property value="" name="logger.category"/>
+                    <property value="INFO" name="logger.level"/>
+                </properties>
+                <description>Uses logging to show how inbound properties can be accessed from Mule message properties</description>
+            </pattern>
+            <pattern type="org.mule.tooling.ui.modules.core.pattern.component" name="Hello" entity-id="ceb9c0bd-7861-4391-ad5e-7cdc5f36bbcb">
+                <properties>
+                    <property value="org.mule.examples.hello.HelloComponent" name="class.name"/>
+                    <property value="false" name="component.singleton"/>
+                </properties>
+                <description>Invoke a Java component</description>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>
